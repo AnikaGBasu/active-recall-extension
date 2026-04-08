@@ -18,7 +18,7 @@ The AI Active Recall Helper was designed to address this gap. Instead of replaci
 
 This project was developed as the final project for a Global Online Academy (GOA) Neuropsychology course.
 
-Out of more than 1,500 projects submitted across GOA courses, it was selected as one of 64 projects featured in the Global Showcase.
+Out of more than 15000 projects submitted across GOA courses, it was selected as one of 64 projects featured in the Global Showcase.
 
 Global Showcase: https://vimeo.com/showcase/8942485
 
