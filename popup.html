@@ -2,113 +2,221 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>🧠 AI Recall Helper</title>
+    <title>Before You Copy</title>
     <style>
+      * {
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        width: 320px; 
-        padding: 15px;
-        background-color: #f4f7f9;
-        color: #333;
+        width: 360px;
+        margin: 0;
+        padding: 16px;
+        background: #f7f5f0;
+        color: #202124;
+        font-family: Arial, Helvetica, sans-serif;
       }
-      #status {
-        font-weight: bold;
-        color: #007bff;
-        margin-bottom: 10px;
-        font-size: 0.9em;
+
+      h1 {
+        margin: 0 0 4px;
+        font-size: 21px;
+        line-height: 1.2;
+        letter-spacing: 0;
       }
-      .header {
-        font-size: 1.2em;
-        font-weight: 600;
-        margin-top: 15px;
-        margin-bottom: 5px;
-        color: #007bff;
-        border-bottom: 2px solid #007bff;
-        padding-bottom: 5px;
-      }
-      .mcq-header {
-        color: #e83e8c; /* Pink for MCQs */
-        border-bottom: 2px solid #e83e8c;
-      }
-      .question-item, .mcq-item {
-        margin-bottom: 15px;
-        padding: 8px;
-        border-radius: 4px;
-        background-color: #ffffff;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-      .mcq-question {
-        font-weight: bold;
-        margin-bottom: 8px;
-      }
-      .mcq-option {
-        width: 100%;
-        padding: 8px;
-        margin-top: 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        text-align: left;
-        cursor: pointer;
-        background-color: #f8f9fa;
-        transition: background-color 0.1s;
-      }
-      .mcq-option:hover:not(:disabled) {
-        background-color: #e9ecef;
-      }
-      .mcq-option.correct {
-        background-color: #d4edda;
-        border-color: #28a745;
-        color: #155724;
-        font-weight: bold;
-      }
-      .mcq-option.incorrect {
-        background-color: #f8d7da;
-        border-color: #dc3545;
-        color: #721c24;
-      }
-      .answer-item {
-        margin-top: 5px;
+
+      .subtitle {
+        margin: 0 0 14px;
         color: #555;
-        font-size: 0.9em;
-        padding: 8px;
-        border-left: 3px solid #28a745;
-        background-color: #e9f7ee;
-        white-space: pre-wrap;
+        font-size: 13px;
+        line-height: 1.4;
       }
+
+      .status {
+        padding: 10px;
+        border: 1px solid #d8d2c3;
+        border-radius: 8px;
+        background: #fffdf8;
+        font-weight: 700;
+        font-size: 13px;
+      }
+
+      .section {
+        margin-top: 14px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      select,
+      input[type="password"],
+      input[type="text"] {
+        width: 100%;
+        min-height: 36px;
+        padding: 8px 10px;
+        border: 1px solid #c9c2b2;
+        border-radius: 6px;
+        background: #fff;
+        color: #202124;
+        font-size: 13px;
+      }
+
+      .toggle-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 10px;
+        border: 1px solid #d8d2c3;
+        border-radius: 8px;
+        background: #fffdf8;
+      }
+
+      .toggle-row label {
+        margin: 0;
+        font-weight: 700;
+      }
+
+      .hint {
+        margin: 4px 0 0;
+        color: #625d55;
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      details {
+        margin-top: 14px;
+        padding: 10px;
+        border: 1px solid #d8d2c3;
+        border-radius: 8px;
+        background: #fffdf8;
+      }
+
+      summary {
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
       button {
         width: 100%;
-        padding: 10px;
+        min-height: 38px;
+        padding: 9px 12px;
         margin-top: 10px;
-        border: none;
-        border-radius: 5px;
-        font-size: 1em;
+        border: 1px solid #1f6f64;
+        border-radius: 6px;
+        background: #1f6f64;
+        color: white;
+        font-size: 13px;
+        font-weight: 700;
         cursor: pointer;
-        transition: background-color 0.2s;
       }
-      #generateBtn {
-        background-color: #007bff;
-        color: white;
+
+      button.secondary {
+        border-color: #a23d35;
+        background: #fff;
+        color: #8c2f28;
       }
-      #generateBtn:hover {
-        background-color: #0056b3;
+
+      .message {
+        min-height: 18px;
+        margin-top: 10px;
+        color: #4b5a56;
+        font-size: 12px;
+        line-height: 1.35;
       }
-      #revealBtn {
-        background-color: #28a745;
-        color: white;
+
+      .privacy {
+        margin: 14px 0 0;
+        padding-top: 12px;
+        border-top: 1px solid #d8d2c3;
+        color: #4e4a43;
+        font-size: 12px;
+        line-height: 1.4;
       }
-      #revealBtn:hover {
-        background-color: #1e7e34;
+
+      .saved {
+        color: #1f6f64;
+      }
+
+      .debug-output {
+        max-height: 220px;
+        overflow: auto;
+        margin: 10px 0 0;
+        padding: 10px;
+        border: 1px solid #d8d2c3;
+        border-radius: 6px;
+        background: #202124;
+        color: #f2f4f3;
+        font: 11px/1.45 Menlo, Consolas, monospace;
+        white-space: pre-wrap;
+        word-break: break-word;
       }
     </style>
   </head>
   <body>
-    <div id="status">Loading...</div>
-    <button id="generateBtn">Generate Quiz</button>
-    <button id="revealBtn" style="display:none;">Reveal Free-Response Answers</button>
-    
-    <div id="mcqs-container"></div> <div id="questions"></div>
-    <div id="answers" style="display:none;"></div>
+    <h1>Before You Copy</h1>
+    <p class="subtitle">A just-in-time reflection scaffold for responsible GenAI use.</p>
 
+    <div id="status" class="status">Checking for AI output...</div>
+
+    <div class="section">
+      <label for="modeSelect">Mode</label>
+      <select id="modeSelect">
+        <option value="gentle">Gentle</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+        <option value="auto">Auto</option>
+      </select>
+    </div>
+
+    <div class="section toggle-row">
+      <input id="saveSelectedExcerpts" type="checkbox" />
+      <div>
+        <label for="saveSelectedExcerpts">Save selected excerpts for research</label>
+        <p class="hint">Default is off. When off, logs store length and reflection data, not copied text.</p>
+      </div>
+    </div>
+
+    <details>
+      <summary>LLM configuration</summary>
+      <div class="section">
+        <label for="backendEndpoint">Backend proxy endpoint</label>
+        <input id="backendEndpoint" type="text" placeholder="http://localhost:3000/classify" />
+        <p class="hint">Recommended for real use. The proxy should keep any production API key server-side.</p>
+      </div>
+      <div class="section">
+        <label for="openaiApiKey">Development OpenAI key</label>
+        <input id="openaiApiKey" type="password" placeholder="Optional local development key" />
+        <p class="hint">Stored locally in Chrome only. Do not use this for deployed student installs.</p>
+        <button id="saveAndTestApiKeyBtn" type="button">Save and Test API Key</button>
+        <button id="clearApiKeyBtn" class="secondary" type="button">Clear Saved API Key</button>
+      </div>
+      <div class="section">
+        <label for="openaiModel">Model</label>
+        <input id="openaiModel" type="text" placeholder="gpt-4o-mini" />
+      </div>
+    </details>
+
+    <button id="exportLogsBtn">Export Study Logs as CSV</button>
+    <button id="clearLogsBtn" class="secondary">Clear Logs</button>
+
+    <details open>
+      <summary>Debug why it is not working</summary>
+      <button id="runDiagnosticsBtn">Run Diagnostics</button>
+      <button id="testLlmBtn">Test LLM</button>
+      <button id="testModalBtn">Test Modal on This Tab</button>
+      <button id="clearDebugBtn" class="secondary">Clear Debug Logs</button>
+      <pre id="debugOutput" class="debug-output">Diagnostics have not run yet.</pre>
+    </details>
+
+    <div id="message" class="message"></div>
+    <p class="privacy">This tool is a reflection scaffold, not a monitoring or anti-cheating tool.</p>
+
+    <script src="storage.js"></script>
+    <script src="csvExport.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>
